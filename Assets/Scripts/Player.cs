@@ -1,7 +1,9 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class Player : MonoBehaviour
     //Limits where player can move
     public float xRange = 13;
     public float yRange = 4;
+    public float lowerY = 5;
 
     //Player health and iframes
     public int health = 5;
@@ -30,6 +33,10 @@ public class Player : MonoBehaviour
     public GameObject collectable;
     public int score = 0;
 
+    //UI
+    public TextMeshProUGUI healthUI;
+    public TextMeshProUGUI scoreUI;
+
     void Start()
     {
         moveAction.Enable();
@@ -37,7 +44,13 @@ public class Player : MonoBehaviour
         float collectableY = Random.Range(-yRange + 1, yRange-2);
         Vector3 coinPosition = new Vector3(collectableX, collectableY, 0);
         Instantiate(collectable, coinPosition, collectable.transform.rotation);
-        
+
+        //UI
+        healthUI.text = "Health: " + health;
+        scoreUI.text = "Score: " + score;
+
+        score = 0;
+
     }
 
     // Update is called once per frame
@@ -57,9 +70,9 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
         }
-        if (transform.position.y < -yRange)
+        if (transform.position.y < -yRange- lowerY)
         {
-            transform.position = new Vector3(transform.position.x, -yRange, transform.position.z);
+            transform.position = new Vector3(transform.position.x, -yRange-lowerY, transform.position.z);
         }
         if (transform.position.y > yRange)
         {
@@ -78,6 +91,15 @@ public class Player : MonoBehaviour
             player.GetComponent<MeshRenderer>().material = normal;
             isInvincible = false;
         }
+        if(health <= 0)
+        {
+            SceneManager.LoadScene(2);
+            PlayerPrefs.SetInt("lastScore", score);
+            if (PlayerPrefs.GetInt("highScore") <= score)
+            {
+                PlayerPrefs.SetInt("highScore", score);
+            }
+        }
 
     }
 
@@ -94,6 +116,7 @@ public class Player : MonoBehaviour
                 Debug.Log("Health: " + health);
                 player.GetComponent<MeshRenderer>().material = iframes;
                 isInvincible = true;
+                healthUI.text = "Health: " + health;
             }
             //For projectiles
             else if (other.tag == "Projectile")
@@ -104,6 +127,7 @@ public class Player : MonoBehaviour
                 Debug.Log("Health: " + health);
                 player.GetComponent<MeshRenderer>().material = iframes;
                 isInvincible = true;
+                healthUI.text = "Health: " + health;
             }
         }
     }
@@ -118,6 +142,7 @@ public class Player : MonoBehaviour
             score += 1;
             Debug.Log("Score: " + score);
             Destroy(other.gameObject);
+            scoreUI.text = "Score: " + score;
         }
     }
 }

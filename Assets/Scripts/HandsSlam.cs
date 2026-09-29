@@ -28,14 +28,14 @@ public class HandsSlam : MonoBehaviour
         }
 
         //counts down delay
-        delay -= 1*Time.deltaTime;
+        delay -= 1.25f*Time.deltaTime;
         if (delay <= 0)
         {
             slam = true;
         }
 
         //spawns fragments, then destroy's itself
-        if(transform.position.y < -8)
+        if(transform.position.y < -12)
         {
             Instantiate(debris, transform.position, debris.transform.rotation);
             Instantiate(debris, transform.position, Quaternion.Euler(0, 0, 15));

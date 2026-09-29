@@ -9,9 +9,9 @@ public class Boss : MonoBehaviour
     public float speed = 10.0f;
 
     //Attacks for the boss to create
-    public GameObject fireBreath;
     public GameObject[] hands;
-
+    public GameObject player;
+    public Player playerScript;
 
     //Sets the spawn position of hands
     public const float handX = 7.3f;
@@ -21,13 +21,14 @@ public class Boss : MonoBehaviour
     public Vector3 leftHandSpawn = new Vector3(-handX, handY, handZ);
     public Vector3 rightHandSpawn = new Vector3(handX, handY, handZ);
 
-    public InputAction SpawnAction;
-    public float delay = 5;
+    public float delay = 3;
+    public float scoreScaling = .01f;
 
 
     void Start()
     {
-        SpawnAction.Enable();    
+        player = GameObject.Find("Player");
+        playerScript = player.GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -54,7 +55,7 @@ public class Boss : MonoBehaviour
                 Instantiate(hands[5], rightHandSpawn, hands[5].transform.rotation);
                 Debug.Log("Tear");
             }
-            delay = 5;
+            delay = 5 - (playerScript.score * scoreScaling);
         }
         delay -= 1 * Time.deltaTime;
     }

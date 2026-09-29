@@ -15,7 +15,7 @@ public class Debris : MonoBehaviour
     void Update()
     {
         //checks to see if off screen, then deletes self
-        if (transform.position.y < -12)
+        if (transform.position.y < -16)
         {
             Destroy(gameObject);
         }

@@ -59,7 +59,7 @@ public class HandsTear : MonoBehaviour
             fireDelay -= 1 * Time.deltaTime;
         }
         //Checks if object is off screen, and then removes it
-        if (transform.position.y < -12)
+        if (transform.position.y < -18)
         {
             Destroy(gameObject);
         }
