@@ -41,19 +41,16 @@ public class Boss : MonoBehaviour
             {
                 Instantiate(hands[0], leftHandSpawn, hands[0].transform.rotation);
                 Instantiate(hands[1], rightHandSpawn, hands[1].transform.rotation);
-                Debug.Log("Fireballs");
             }
             else if (handType == 1)
             {
                 Instantiate(hands[2], leftHandSpawn, hands[2].transform.rotation);
                 Instantiate(hands[3], rightHandSpawn, hands[3].transform.rotation);
-                Debug.Log("Slam");
             }
             else if (handType == 2)
             {
                 Instantiate(hands[4], leftHandSpawn, hands[4].transform.rotation);
                 Instantiate(hands[5], rightHandSpawn, hands[5].transform.rotation);
-                Debug.Log("Tear");
             }
             delay = 5 - (playerScript.score * scoreScaling);
         }

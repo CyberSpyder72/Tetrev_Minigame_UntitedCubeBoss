@@ -113,7 +113,6 @@ public class Player : MonoBehaviour
             {
                 health -= 1;
                 iFrames = iFrameDuration;
-                Debug.Log("Health: " + health);
                 player.GetComponent<MeshRenderer>().material = iframes;
                 isInvincible = true;
                 healthUI.text = "Health: " + health;
@@ -124,7 +123,6 @@ public class Player : MonoBehaviour
                 health -= 1;
                 iFrames = iFrameDuration;
                 Destroy(other.gameObject);
-                Debug.Log("Health: " + health);
                 player.GetComponent<MeshRenderer>().material = iframes;
                 isInvincible = true;
                 healthUI.text = "Health: " + health;
@@ -140,7 +138,6 @@ public class Player : MonoBehaviour
             Vector3 coinPosition = new Vector3(collectableX, collectableY, 0);
             Instantiate(collectable, coinPosition, collectable.transform.rotation);
             score += 1;
-            Debug.Log("Score: " + score);
             Destroy(other.gameObject);
             scoreUI.text = "Score: " + score;
         }
